@@ -1,10 +1,10 @@
 Name:           infinipath-psm
 Version:        3.3
-Release:        7
+Release:        8
 License:        GPLv2 or BSD
 Summary:        Libraries for Intel Performance Scaled Messaging
 URL:            https://github.com/01org/psm
-Source0:        https://github.com/intel/psm/archive/v3.3.tar.gz
+Source0:        infinipath-psm-3.3-22_g4abbc60_open.tar.gz
 ExclusiveArch:  x86_64
 BuildRequires:  libuuid-devel
 Obsoletes:      infinipath-libs <= %{version}-%{release}
@@ -42,15 +42,15 @@ Requires(postun): /sbin/ldconfig
 Development files for Intel PSM.
 
 %prep
-%autosetup -n psm-%{version} -p1
+%autosetup -n infinipath-psm-%{version}-22_g4abbc60_open -p1
 find libuuid -type f -not -name 'psm_uuid.[c|h]' -not -name Makefile -exec rm -f '{}' \;
 
 %build
 %{set_build_flags}
-%make_build PSM_USE_SYS_UUID=1 %{PSM_HAVE_SCIF=0 MIC=0} CC=gcc
+%make_build PSM_USE_SYS_UUID=1 PSM_HAVE_SCIF=0 MIC=0 CC=gcc
 
 %install
-%make_install %{PSM_HAVE_SCIF=0 MIC=0}
+%make_install PSM_HAVE_SCIF=0 MIC=0
 install -d %{buildroot}%{_sysconfdir}/udev/rules.d
 install -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/udev/rules.d/60-ipath.rules
 
@@ -76,5 +76,8 @@ install -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/udev/rules.d/60-ipath.rule
 %{_includedir}/{psm.h,psm_mq.h}
 
 %changelog
+* Mon Mar 16 2020 Ling Yang <lingyang2@huawei.com> - 3.3-8
+- Fixed build error
+
 * Fri Mar 13 2020 Ling Yang <lingyang2@huawei.com> - 3.3-7
 - Package Init
