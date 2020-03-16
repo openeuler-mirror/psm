@@ -1,7 +1,8 @@
-diff -uprN psm-3.3_raw/psm_diags.c psm-3.3/psm_diags.c
---- psm-3.3_raw/psm_diags.c	2014-08-21 04:00:18.000000000 +0800
-+++ psm-3.3/psm_diags.c	2020-03-13 21:35:28.340564067 +0800
-@@ -280,10 +280,11 @@ memcpy_check_size (memcpy_fn_t fn, int *
+diff --git a/psm_diags.c b/psm_diags.c
+index 3e2df9d..3714cea 100644
+--- a/psm_diags.c
++++ b/psm_diags.c
+@@ -281,10 +281,11 @@ memcpy_check_size (memcpy_fn_t fn, int *p, int *f, size_t n)
    if (USE_MALLOC) {
      src = psmi_malloc(PSMI_EP_NONE, UNDEFINED, size);
      dst = psmi_malloc(PSMI_EP_NONE, UNDEFINED, size);
@@ -13,4 +14,4 @@ diff -uprN psm-3.3_raw/psm_diags.c psm-3.3/psm_diags.c
 +    }
    }
    else {
-     void *src_p, *dst_p;
+     void *src_p = NULL, *dst_p = NULL;
