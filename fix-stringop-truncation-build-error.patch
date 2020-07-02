@@ -1,0 +1,13 @@
+diff -Naur psm-4abbc60/psm_ep.c psm-4abbc60-edit/psm_ep.c
+--- psm-4abbc60/psm_ep.c	2020-07-02 14:18:23.738500086 +0800
++++ psm-4abbc60-edit/psm_ep.c	2020-07-02 14:22:39.097969891 +0800
+@@ -1349,8 +1349,7 @@
+ 
+     b_new = (char *) devstr;
+     e = b_new + len;
+-    strncpy(e, devstring, len-1);
+-    e[len-1] = '\0';
++    strncpy(e, devstring, len);
+     ee = e + len;
+     i = 0;
+     while (e < ee && *e && i < PTL_MAX_INIT) {
