@@ -1,12 +1,12 @@
 Name:           infinipath-psm
 Version:        3.3
-Release:        10
+Release:        11
 License:        GPLv2 or BSD
 Summary:        Libraries for Intel Performance Scaled Messaging
 URL:            https://github.com/01org/psm
 Source0:        https://codeload.github.com/intel/psm/zip/4abbc60
 ExclusiveArch:  x86_64
-BuildRequires:  libuuid-devel
+BuildRequires:  libuuid-devel gcc
 Obsoletes:      infinipath-libs <= %{version}-%{release}
 Requires:       udev
 Requires(post):   /sbin/ldconfig
@@ -78,6 +78,9 @@ install -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/udev/rules.d/60-ipath.rule
 %{_includedir}/{psm.h,psm_mq.h}
 
 %changelog
+* Mon May 31 2021 huanghaitao <huanghaitao8@huawei.com> - 3.3-11
+- Completing build dependencies
+
 * Thu Jul 02 2020 senlin <xiasenlin1@huawei.com> - 3.3-10
 - Fix stringop-truncation build error
 
