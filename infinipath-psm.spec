@@ -1,6 +1,6 @@
 Name:           infinipath-psm
 Version:        3.3
-Release:        11
+Release:        12
 License:        GPLv2 or BSD
 Summary:        Libraries for Intel Performance Scaled Messaging
 URL:            https://github.com/01org/psm
@@ -27,6 +27,8 @@ Patch0005:      0001-Extend-buffer-for-uvalue-and-pvalue.patch
 Patch0006:      extend-fdesc-array.patch
 # Fix stringop-truncation build error
 Patch0007:      fix-stringop-truncation-build-error.patch
+# Fix multiple definitions build error
+Patch0008:      psm-multiple-definition.patch
 
 %description
 PSM API is Intel's low-level user-level communications interface for the True Scale family of products.
@@ -78,6 +80,9 @@ install -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/udev/rules.d/60-ipath.rule
 %{_includedir}/{psm.h,psm_mq.h}
 
 %changelog
+* Mon Aug 02 2021 wangyong <wangyong187@huawei.com> - 3.3-12
+- Fix build error caused by GCC upgrade to GCC-10
+
 * Mon May 31 2021 huanghaitao <huanghaitao8@huawei.com> - 3.3-11
 - Completing build dependencies
 
