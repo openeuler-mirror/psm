@@ -1,6 +1,6 @@
 Name:           infinipath-psm
 Version:        3.3
-Release:        12
+Release:        13
 License:        GPLv2 or BSD
 Summary:        Libraries for Intel Performance Scaled Messaging
 URL:            https://github.com/01org/psm
@@ -16,7 +16,11 @@ Source1:        ipath.rules
 # Fix indentation misleading
 Patch0001:      misleading-indentation.patch
 # Add base cflags
+%if "%toolchain" == "clang"
+Patch0002:      adjust-base-cflags-clang.patch
+%else 
 Patch0002:      adjust-base-cflags.patch
+%endif
 # Remove executable permissions for header files
 Patch0003:      remove-executable-permissions-for-header-files.patch
 # Add sysmacros.h for build
@@ -51,7 +55,10 @@ find libuuid -type f -not -name 'psm_uuid.[c|h]' -not -name Makefile -exec rm -f
 
 %build
 %{set_build_flags}
-%make_build PSM_USE_SYS_UUID=1 PSM_HAVE_SCIF=0 MIC=0 CC=gcc
+%if "%toolchain" == "clang"
+	export CFLAGS="$CFLAGS -Wno-error=unknown-warning-option -Wno-error=unused-function -Wno-error=absolute-value -Wno-error=unused-but-set-variable"
+%endif
+%make_build PSM_USE_SYS_UUID=1 PSM_HAVE_SCIF=0 MIC=0
 
 %install
 %make_install PSM_HAVE_SCIF=0 MIC=0
@@ -80,6 +87,9 @@ install -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/udev/rules.d/60-ipath.rule
 %{_includedir}/{psm.h,psm_mq.h}
 
 %changelog
+* Tue May 23 2023 yoo <sunyuechi@iscas.ac.cn> - 3.3-13
+- fix clang build error
+
 * Mon Aug 02 2021 wangyong <wangyong187@huawei.com> - 3.3-12
 - Fix build error caused by GCC upgrade to GCC-10
 
